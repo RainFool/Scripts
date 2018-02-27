@@ -6,7 +6,8 @@ PATH_IM_REFACT_APK='/Users/rainfool/WorkSpaceHuYa/kiwi-android_im_refact_feature
 PATH_MAINLINE='/Users/rainfool/WorkSpaceHuYa/kiwi-android_mainline_feature'
 PATH_MAINLINE_APK='/Users/rainfool/WorkSpaceHuYa/kiwi-android_mainline_feature/app/kiwi/build/outputs/apk'
 
-NAME_APK='yygamelive-5.6.0-SNAPSHOT-0-official.apk'
+PATH_TRUNK='/Users/rainfool/WorkSpaceHuYa/trunk'
+PATH_TRUNK_APK='/Users/rainfool/WorkSpaceHuYa/trunk/app/kiwi/build/outputs/apk'
 
 if [[ $1 = *"main"* ]]; then
   echo 'Param is mainline'
@@ -16,6 +17,10 @@ elif [[ $1 = *"im"* ]]; then
   echo 'Param is im_refact'
   path_gradle=$PATH_IM_REFACT
   path_apk=$PATH_IM_REFACT_APK
+elif [[ $1 = *"tru"* ]]; then
+  echo 'Param is trunk'
+  path_gradle=$PATH_TRUNK
+  path_apk=$PATH_TRUNK_APK
 else
   echo 'You are MISSING params,it can be [main,im]'
   exit 0
@@ -30,6 +35,14 @@ echo '----------gradle build done----------'
 echo ' '
 echo 'cd apk dir'
 cd $path_apk
+
+for file in ./*
+do
+    if [[ $file = *"official.apk"* ]]; then
+        NAME_APK=$file
+        echo $file
+    fi
+done
 
 adb push $NAME_APK /data/local/tmp
 echo 'Installing...'
